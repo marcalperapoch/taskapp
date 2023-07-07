@@ -24,10 +24,10 @@ dependencies {
     implementation(platform("io.dropwizard:dropwizard-bom:4.0.1"))
     implementation("io.dropwizard:dropwizard-core")
     implementation("io.dropwizard:dropwizard-jdbi3")
-    implementation("ru.vyarus:dropwizard-guicey:7.0.0")
-    implementation("ru.vyarus.guicey:guicey-jdbi3:7.0.0")
 
-    implementation("com.h2database:h2:1.4.193") // TODO: upgrade and use libs
+    implementation(libs.guicey)
+    implementation(libs.jdbi3)
+    implementation(libs.h2)
     implementation(libs.caching)
 
 

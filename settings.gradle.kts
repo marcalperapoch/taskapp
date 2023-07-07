@@ -4,8 +4,10 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             library("guice", "com.google.inject:guice:5.1.0")
-            library("h2", "com.h2database:h2:2.1.214")
+            library("h2", "com.h2database:h2:1.4.193")
             library("caching", "com.github.ben-manes.caffeine:caffeine:3.1.2")
+            library("guicey", "ru.vyarus:dropwizard-guicey:7.0.0")
+            library("jdbi3", "ru.vyarus.guicey:guicey-jdbi3:7.0.0")
         }
         create("testLibs") {
             version("junit", "5.9.2")
