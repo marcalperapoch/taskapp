@@ -255,6 +255,7 @@ them and how to tweak them if needed.
 - Load testing: another nice to have would have been setting up Gatling and perform load tests to see where are the application bottlenecks.
 - Maybe it would have been nice to consider also a "PATCH" endpoint to allow partial update of the task.
 - A bit more unit testing although a lot of efforts have been put to make sure integration tests cover most of the cases.
+- Use some code formatting plugin
 
 <a name="refs"></a>
 ## References
