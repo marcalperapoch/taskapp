@@ -32,7 +32,7 @@ The following commands will let you generate a Java jar file with all its depend
 
 2. Run it
 ```
-java -jar build/libs/tasks-app-1.0-SNAPSHOT-all.jar server src/config/tasks-app-config.yaml
+java -jar build/libs/tasks-app-1.0-all.jar server src/config/tasks-app-config.yaml
 ```
 <a name="running_container"></a>
 ## Running containerized application
@@ -144,9 +144,9 @@ representation of the Java object being stored.
 Additionally, it also has support for a unique index.
 
 Motivations:
-- the model is simple enough to be able to create a taskId <-> task association. No need for strong relationships such foreign keys
+- the model is simple enough to be able to create a taskId -> task association. No need for strong relationships such foreign keys
 - accessing data by primary key is extremely fast and using the right transaction isolation level, locks can be acquired per row, which means that modifying a single record don't 
-- affect performance of other row reads/modifications.
+affect performance of other row reads/modifications.
 - using JSON as payload offers backwards and forward compatibility. New fields can be ignored by older versions and older fields can also be ignored by newer versions of the application. 
 - single way of persisting data. If you know how to use a HashMap you know how to persist data.
 - even though there's only support for a secondary index, it shouldn't be hard to extend to support N of them. The only reason of just having one now is that it's all that was 
@@ -171,8 +171,9 @@ traffic. If that was the case, a valid solution would be to use the local cache 
 
 ### ADR3. Read your own writes
 This api has been designed to provide strong consistency on client requests addressing specific `{taskId}`, and eventual consistency on requests targeting multiple tasks.
-For instance, when a client updates a task by doing `PUT /tasks/{taskId}` it will immediately get the most recent task representation in both that same endpoint's response 
-and the corresponding `GET /tasks/{taskID}`. However, calling `GET /tasks` may return stale data until the cache is refreshed.
+For instance, when a client updates a task by doing `PUT /tasks/{taskId}` it will immediately get the most recent version of this `task` in both, that same endpoint's response 
+and the corresponding `GET /tasks/{taskID}` assuming both calls go to the same server. However, calling `GET /tasks` may return stale data until the cache is refreshed.
+Therefore, using sticky sessions at load-balancer level, could improve the client experience.
 
 ### ADR4. Id generation
 An important aspect of the persistence solution is the generation of arbitrary new ids.
@@ -246,6 +247,7 @@ solved on a layer on top of my container (i.e: the load balancer), adding some r
 them and how to tweak them if needed.
 - Load testing: another nice to have would have been setting up Gatling and perform load tests to see where are the application bottlenecks.
 - Maybe it would have been nice to consider also a "PATCH" endpoint to allow partial update of the task.
+- A bit more unit testing although a lot of efforts have been put to make sure integration tests cover most of the cases.
 
 <a name="refs"></a>
 ## References
