@@ -9,6 +9,7 @@ This repository contains the backend offering a Task API that clients can use to
 * [Running standalone Java application](#running_standalone)
 * [Running containerized application](#running_container)
 * [Publish Docker image](#publish_docker)
+* [API Documentation](#api_docs)
 * [New to this repo?](#new_to_repo)
 * [Architecture Decision Records (ADR)](#adrs)
 * [Reflections and leftovers](#reflections)
@@ -73,6 +74,7 @@ To do so, you can run the following command:
 
 That will publish and tag your image as `tasks-app:{version}`. Where `version` is the one defined in the `build.gradle.kts` file.
 
+<a name="api_docs"></a>
 ## API Documentation
 
 ### GET /tasks
@@ -218,6 +220,11 @@ things such: queries/second and query times. Ideally, we could display them in *
 > Metrics are a key element for incident detection, and if this was about something we would launch and have real usage, it would be a requirement to have some place to visualize 
 them rather than just in the `http://{host}:8081/metrics`. The only reason I didn't do it yet, is because I'm already out of time :D.
 
+### ADR8. Deployment
+
+Deployment is done manually from the Oracle Cloud console at https://cloud.oracle.com/. Concretely, I'm creating a container instance which pulls the Docker image I publish with 
+the Gradle command explained in one of the sections above. The Docker image is hosted in my personal Docker Hub repository. Link: https://hub.docker.com/repository/docker/perapoch/tasks-app/general.
+Both http ports 8080 for the api and 8081 for admin are exposed.
 
 <a name="reflections"></a>
 ## Reflections and leftovers
